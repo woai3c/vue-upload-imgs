@@ -1,0 +1,38 @@
+{
+  "name": "vue-upload-img",
+  "version": "1.0.0",
+  "description": "Vue动态生成表单",
+  "main": "dist/vue-upload-img.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woai3c/vue-upload-img.git"
+  },
+  "keywords": [
+    "vue-upload-img",
+    "vue"
+  ],
+  "author": "bin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/woai3c/vue-upload-img/issues"
+  },
+  "homepage": "https://github.com/woai3c/vue-upload-img#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^3.5.2",
+    "style-loader": "^1.1.4",
+    "uglifyjs-webpack-plugin": "^1.3.0",
+    "url-loader": "^4.1.0",
+    "vue-loader": "^15.9.1",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
+  }
+}

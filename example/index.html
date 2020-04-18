@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>example</title>
+    <style>
+        .preview-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.5);
+            overflow: auto;
+        }
+        .dialog img {
+            display: block;
+            margin: auto;
+            margin-top: 10vh;
+        }
+        .close-preview {
+            position: fixed;
+            top: 2vh;
+            left: 10vw;
+            transform: translateX(-50%);
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <vue-upload-img 
+            multiple
+            :file-list="fileList"
+            :before-upload="beforeUpload"
+            :limit="limit"
+            :type="type"
+            @change="change"
+            @remove="remove"
+            @preview="preview"
+            @exceed="exceed"
+        >
+        </vue-upload-img>
+        <div class="preview-bg" v-show="isPreview">
+            <div class="dialog">
+                <button class="close-preview" @click="closePreview">关闭</button>
+                <img :src="previewIMG" class="preview-img">
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../dist/vue-upload-img.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                fileList: [],
+                previewIMG: null,
+                options: [1, 2, 3, 4],
+                limit: 3,
+                imgMaxSize: 2,
+                isPreview: false,
+                type: 2, // 0 显示图片 1 图片和按钮都显示
+            }
+        },
+        methods: {
+            change(res) {
+                this.fileList = res
+                console.log(res)
+            },
+
+            remove(index) {
+                this.fileList.splice(index, 1)
+            },
+
+            preview(index) {
+                this.previewIMG = this.fileList[index].url
+                this.isPreview = true
+            },
+
+            exceed() {
+                alert(`只能上传${this.limit}张图片`)
+            },
+
+            beforeUpload(files) {
+                for (let i = 0, len = files.length; i < len; i++) {
+                    const file = files[i]
+                    const size = file.size / 1024 / 1024
+                    if (size > this.imgMaxSize) {
+                        alert('不能上传超过1M的图片')
+                        return false
+                    }
+
+                    if (file.type != 'image/jpeg' && file.type != 'image/png') {
+                        alert('只能上传jpg和png格式的图片')
+                        return false
+                    }
+                }
+
+                return true
+            },
+
+            closePreview() {
+                this.isPreview = false
+            }
+        }
+    })
+</script>
+</html>
