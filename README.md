@@ -30,13 +30,13 @@
 npm i vue-upload-imgs
 ```
 
-```
+```js
 import Vue from 'vue'
 import VueUploadImgs from 'vue-upload-imgs'
 
 Vue.use(VueUploadImgs)
 ```
-```
+```html
 <template>
     <div>
         <VueUploadImgs 
