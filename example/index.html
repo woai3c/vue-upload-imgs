@@ -32,7 +32,7 @@
     <div id="app">
         <vue-upload-img 
             multiple
-            :file-list="fileList"
+            :files="files"
             :before-upload="beforeUpload"
             :limit="limit"
             :type="type"
@@ -57,27 +57,27 @@
         el: '#app',
         data() {
             return {
-                fileList: [],
+                files: [],
                 previewIMG: null,
                 options: [1, 2, 3, 4],
-                limit: 3,
+                limit: 0,
                 imgMaxSize: 2,
                 isPreview: false,
-                type: 2, // 0 显示图片 1 图片和按钮都显示
+                type: 0, // 0 预览模式 1 列表模式 2 预览模式 + 上传按钮
             }
         },
         methods: {
             change(res) {
-                this.fileList = res
+                this.files = res
                 console.log(res)
             },
 
             remove(index) {
-                this.fileList.splice(index, 1)
+                this.files.splice(index, 1)
             },
 
             preview(index) {
-                this.previewIMG = this.fileList[index].url
+                this.previewIMG = this.files[index].url
                 this.isPreview = true
             },
 
