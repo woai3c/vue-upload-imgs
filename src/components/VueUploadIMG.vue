@@ -62,6 +62,14 @@ export default {
             type: Boolean,
             default: false, // 是否多选
         },
+        compress: {
+            type: Boolean,
+            default: false, // 是否开启压缩
+        },
+        quality: {
+            type: Number,
+            default: 0.8, // 默认压缩质量
+        },
         beforeUpload: { // 上传前回调函数
             type: Function,
             default: null,
@@ -96,15 +104,50 @@ export default {
             const result = [...this.files]
             if (!this.verify(oldLen + files.length)) return 
 
+            const canvas = document.createElement('canvas')
+            const ctx = canvas.getContext('2d')
             for (let i = 0, len = files.length; i < len; i++) {
-                const reader = new FileReader()
                 const file = files[i]
-                reader.readAsDataURL(file)
-                reader.onload = (res) => {
-                    result.push({ name: file.name, url: res.target.result, type: file.type, size: file.size })
-                    if (len + oldLen == result.length) {
-                        this.$emit('change', result)
-                        e.target.value = ''
+                if (file.type.includes('image')) {
+                    const reader = new FileReader()
+                    reader.readAsDataURL(file)
+                    reader.onload = (res) => {
+                        const fileResult = res.target.result 
+                        if (!this.compress) {
+                            result.push({
+                                name: file.name,
+                                url: fileResult,
+                                type: file.type,
+                                size: file.size,
+                            })
+
+                            if (len + oldLen == result.length) {
+                                this.$emit('change', result)
+                                e.target.value = ''
+                            }
+                        } else {
+                            const img = new Image()
+                            img.src = fileResult
+                            img.onload = () => {
+                                const w = img.width
+                                const h = img.height
+                                canvas.setAttribute("width", w)
+                                canvas.setAttribute("height", h)
+                                ctx.drawImage(img, 0, 0, w, h)
+                                const base64 = canvas.toDataURL(file.type, this.quality)
+                                result.push({
+                                    name: file.name,
+                                    url: base64,
+                                    type: file.type,
+                                    size: file.size,
+                                })
+
+                                if (len + oldLen == result.length) {
+                                    this.$emit('change', result)
+                                    e.target.value = ''
+                                }
+                            }
+                        }
                     }
                 }
             }
