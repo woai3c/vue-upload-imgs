@@ -1,5 +1,5 @@
 <template>
-    <div class="vue-upload-img">
+    <div class="vue-upload-img" :class="disabled? 'vue-upload-disabled' : ''">
         <template v-if="type == 1">
             <label :for="id" class="label-upload">{{ label }}</label>
             <slot></slot>
@@ -31,13 +31,17 @@
             </div>
         </template>
 
-        <input type="file" :id="id" :accept="access" hidden @change="fileChangeHandler" :multiple="multiple">
+        <input ref="vueUploadImg" :disabled="disabled" type="file" :id="id" :accept="access" hidden @change="fileChangeHandler" :multiple="multiple">
     </div>
 </template>
 
 <script>
 export default {
     props: {
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
         type: {
             type: Number,
             default: 0, // 0 只显示图片 1 图片按钮都显示 2 另一种显示模式
@@ -78,14 +82,11 @@ export default {
     data() {
         return {
             id: 'file' + Math.random().toString(16).slice(-13).replace(/\./g, ''),
-            fileEle: null,
         }
-    },
-    mounted() {
-        this.fileEle = document.querySelector('#' + this.id)
     },
     methods: {
         remove(index) {
+            if (this.disabled) return
             this.$emit('remove', index)
         },
 
@@ -94,7 +95,7 @@ export default {
         },
 
         fileChangeHandler(e) {
-            const files = this.fileEle.files
+            const files = this.$refs.vueUploadImg.files
             if (this.beforeUpload && !this.beforeUpload(files)) {
                 e.target.value = ''
                 return
@@ -179,7 +180,6 @@ export default {
     font-weight: normal;
     cursor: pointer;
     display: inline-block;
-    margin-bottom: 10px;
 }
 .vue-upload-img .upload-main {
     font-size: 0;
@@ -194,7 +194,7 @@ export default {
     overflow: hidden;
     position: relative;
     margin-right: 6px;
-    margin-bottom: 5px;
+    margin-top: 5px;
     transition: opacity .3s;
     display: inline-block;
     font-size: 14px;
@@ -282,5 +282,21 @@ export default {
 .vue-upload-img .list-span {
     width: 100px;
     text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.vue-upload-disabled .label-upload {
+    background-color: #F5F7FA;
+    border-color: #E4E7ED;
+    color: #C0C4CC;
+    cursor: not-allowed;
+}
+.vue-upload-disabled .div-add-img {
+    cursor: not-allowed;
+}
+.vue-upload-disabled .div-upload-img .icon-shanchu,
+.vue-upload-disabled .div-upload-img .icon-shanchu1 {
+    cursor: not-allowed;
 }
 </style>

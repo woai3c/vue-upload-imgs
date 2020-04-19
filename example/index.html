@@ -32,6 +32,7 @@
     <div id="app">
         <vue-upload-img 
             multiple
+            compress
             :files="files"
             :before-upload="beforeUpload"
             :limit="limit"
@@ -41,6 +42,7 @@
             @preview="preview"
             @exceed="exceed"
         >
+        <div>只能上传3张图片</div>
         </vue-upload-img>
         <div class="preview-bg" v-show="isPreview">
             <div class="dialog">
@@ -51,6 +53,7 @@
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="index.js"></script>
 <script src="../dist/vue-upload-img.js"></script>
 <script>
     new Vue({
@@ -63,7 +66,7 @@
                 limit: 3,
                 imgMaxSize: 2,
                 isPreview: false,
-                type: 0, // 0 预览模式 1 列表模式 2 预览模式 + 上传按钮
+                type: 2, // 0 预览模式 1 列表模式 2 预览模式 + 上传按钮
             }
         },
         methods: {
