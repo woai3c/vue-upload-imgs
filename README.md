@@ -1,7 +1,10 @@
 # vue 图片上传组件
-组件保存的是图片的 base64 码
+组件保存的是图片的 base64 码，如果有 BUG，请提 [issues](https://github.com/woai3c/vue-upload-imgs/issues)
 
-## demo
+## 在线 demo
+* [预览模式](http://jsrun.net/HMfKp/edit)
+* [列表模式](http://jsrun.net/5MfKp/edit)
+* [禁用](http://jsrun.net/DMfKp/edit)
 
 ## 文档
 |字段|类型|描述|默认值|值类型|
