@@ -6,11 +6,11 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "936767",
+      "icon_id": "591862",
       "name": "删除",
       "font_class": "shanchu",
-      "unicode": "e630",
-      "unicode_decimal": 58928
+      "unicode": "e68a",
+      "unicode_decimal": 59018
     },
     {
       "icon_id": "6275362",
@@ -18,6 +18,13 @@
       "font_class": "icon-test",
       "unicode": "e61e",
       "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "10292039",
+      "name": "删 除",
+      "font_class": "shanchu1",
+      "unicode": "e614",
+      "unicode_decimal": 58900
     }
   ]
 }

@@ -1,30 +1,31 @@
 <template>
     <div class="vue-upload-img">
-        <template v-if="type == 2">
+        <template v-if="type == 1">
             <label :for="id" class="label-upload">{{ label }}</label>
             <slot></slot>
-            <div class="upload-main2">
-                <div class="div-upload-img2" v-for="(item, index) in fileList" v-show="item" :key="index">
-                    <div>
+            <div class="upload-main-list">
+                <div class="div-upload-img-list" v-for="(item, index) in files" v-show="item" :key="index">
+                    <div class="list-img-container">
                         <img :src="item.url">
                     </div>
-                    <p>{{ item.name }}</p>
+                    <span class="list-span">{{ item.name }}</span>
+                    <span class="iconfont icon-shanchu" @click="remove(index)"></span>
                 </div>
             </div>
         </template>
         
         <template v-else>
-            <label :for="id" class="label-upload" v-if="type == 1">{{ label }}</label>
+            <label :for="id" class="label-upload" v-if="type == 2">{{ label }}</label>
             <slot></slot>
             <div class="upload-main">
-                <div class="div-upload-img" v-for="(item, index) in fileList" v-show="item" :key="index">
+                <div class="div-upload-img" v-for="(item, index) in files" v-show="item" :key="index">
                     <img :src="item.url">
                     <div class="upload-bg-img">
                         <span class="iconfont icon-icon-test" @click="preview(index)"></span>
-                        <span class="iconfont icon-shanchu" @click="remove(index)"></span>
+                        <span class="iconfont icon-shanchu1" @click="remove(index)"></span>
                     </div>
                 </div>
-                <label class="div-add-img" :for="id">
+                <label class="div-add-img" :for="id" v-show="!(limit !== 0 && limit == files.length)">
                     <span class="iconfont icon-icon-test"></span>
                 </label>
             </div>
@@ -45,7 +46,7 @@ export default {
             type: String,
             default: 'image/png, image/jpeg',
         },
-        fileList: {
+        files: {
             type: Array,
             default: () => [], // 图片
         },
@@ -55,7 +56,7 @@ export default {
         },
         limit: {
             type: Number,
-            default: 0, // 限制图片数， 0 为不限制
+            default: 1, // 限制上传的图片数， 0 为不限制
         },
         multiple: {
             type: Boolean,
@@ -91,8 +92,8 @@ export default {
                 return
             }
 
-            const oldLen = this.fileList.length
-            const result = [...this.fileList]
+            const oldLen = this.files.length
+            const result = [...this.files]
             if (!this.verify(oldLen + files.length)) return 
 
             for (let i = 0, len = files.length; i < len; i++) {
@@ -186,7 +187,7 @@ export default {
 .vue-upload-img .div-upload-img .icon-icon-test {
     left: 40%;
 }
-.vue-upload-img .div-upload-img .icon-shanchu {
+.vue-upload-img .div-upload-img .icon-shanchu1 {
     left: 60%;
 }
 .vue-upload-img .upload-bg-img {
@@ -203,5 +204,40 @@ export default {
 }
 .vue-upload-img .div-upload-img:hover .upload-bg-img {
     display: block;
+}
+.vue-upload-img .div-upload-img-list {
+    margin-top: 10px;
+    border: 1px solid #c0ccda;
+    padding: 8px;
+    box-sizing: border-box;
+    width: 212px;
+    border-radius: 5px;
+}
+.vue-upload-img .div-upload-img-list .icon-shanchu {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #8c939d;
+}
+.vue-upload-img .list-img-container {
+    width: 50px;
+    overflow: hidden;
+    border-radius: 3px;
+    border: 1px solid #c0ccda;
+}
+.vue-upload-img .list-img-container img {
+    width: 100%;
+    height: 100%;
+}
+.vue-upload-img .list-img-container,
+.vue-upload-img .list-span {
+    display: inline-block;
+    line-height: 50px;
+    height: 50px;
+    font-size: 14px;
+    vertical-align: top;
+}
+.vue-upload-img .list-span {
+    width: 100px;
+    text-align: center;
 }
 </style>
