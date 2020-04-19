@@ -41,7 +41,7 @@ module.exports = {
         ]
     },
     output: {
-        filename: 'vue-upload-img.js',
+        filename: 'vue-upload-imgs.js',
         path: path.resolve(__dirname, 'dist'),
         library: 'VueUploadImg',
         libraryTarget: 'umd'

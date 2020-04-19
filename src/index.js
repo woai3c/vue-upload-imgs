@@ -1,7 +1,7 @@
-import VueUploadImg from './components/VueUploadImg.vue'
+import VueUploadImgs from './components/VueUploadImgs.vue'
 
 const install = function(Vue, opts = {}) {
-    Vue.component('VueUploadImg', VueUploadImg)
+    Vue.component('VueUploadImgs', VueUploadImgs)
 }
 
 const API = {

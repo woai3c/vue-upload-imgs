@@ -1,5 +1,5 @@
 <template>
-    <div class="vue-upload-img" :class="disabled? 'vue-upload-disabled' : ''">
+    <div class="vue-upload-imgs" :class="disabled? 'vue-upload-disabled' : ''">
         <template v-if="type == 1">
             <label :for="id" class="label-upload">{{ label }}</label>
             <slot></slot>
@@ -171,7 +171,7 @@ export default {
 <style>
 @import '../assets/iconfont/iconfont.css';
 
-.vue-upload-img .label-upload {
+.vue-upload-imgs .label-upload {
     border-radius: 5px;
     font-size: 16px;
     padding: 6px 26px;
@@ -181,11 +181,11 @@ export default {
     cursor: pointer;
     display: inline-block;
 }
-.vue-upload-img .upload-main {
+.vue-upload-imgs .upload-main {
     font-size: 0;
 }
-.vue-upload-img .div-add-img,
-.vue-upload-img .div-upload-img {
+.vue-upload-imgs .div-add-img,
+.vue-upload-imgs .div-upload-img {
     min-width: 148px;
     width: 148px;
     height: 148px;
@@ -199,12 +199,12 @@ export default {
     display: inline-block;
     font-size: 14px;
 }
-.vue-upload-img .div-add-img {
+.vue-upload-imgs .div-add-img {
     background-color: #fbfdff;
     border-style: dashed;
     cursor: pointer;
 }
-.vue-upload-img .div-add-img .iconfont {
+.vue-upload-imgs .div-add-img .iconfont {
     font-size: 28px;
     color: #8c939d;
     font-weight: normal;
@@ -213,11 +213,11 @@ export default {
     left: 50%;
     transform: translate(-50%,-50%);
 }
-.vue-upload-img .div-upload-img img {
+.vue-upload-imgs .div-upload-img img {
     width: 100%;
     height: 100%;
 }
-.vue-upload-img .div-upload-img .iconfont {
+.vue-upload-imgs .div-upload-img .iconfont {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -227,13 +227,13 @@ export default {
     cursor: pointer;
     font-size: 20px;
 }
-.vue-upload-img .div-upload-img .icon-icon-test {
+.vue-upload-imgs .div-upload-img .icon-icon-test {
     left: 40%;
 }
-.vue-upload-img .div-upload-img .icon-shanchu1 {
+.vue-upload-imgs .div-upload-img .icon-shanchu1 {
     left: 60%;
 }
-.vue-upload-img .upload-bg-img {
+.vue-upload-imgs .upload-bg-img {
     position: absolute;
     top: 0;
     left: 0;
@@ -242,13 +242,13 @@ export default {
     background: rgba(0,0,0,.5);
     display: none;
 }
-.vue-upload-img .div-upload-img:hover {
+.vue-upload-imgs .div-upload-img:hover {
     opacity: .8;
 }
-.vue-upload-img .div-upload-img:hover .upload-bg-img {
+.vue-upload-imgs .div-upload-img:hover .upload-bg-img {
     display: block;
 }
-.vue-upload-img .div-upload-img-list {
+.vue-upload-imgs .div-upload-img-list {
     margin-top: 10px;
     border: 1px solid #c0ccda;
     padding: 8px;
@@ -256,30 +256,30 @@ export default {
     width: 212px;
     border-radius: 5px;
 }
-.vue-upload-img .div-upload-img-list .icon-shanchu {
+.vue-upload-imgs .div-upload-img-list .icon-shanchu {
     margin-left: 10px;
     cursor: pointer;
     color: #8c939d;
 }
-.vue-upload-img .list-img-container {
+.vue-upload-imgs .list-img-container {
     width: 50px;
     overflow: hidden;
     border-radius: 3px;
     border: 1px solid #c0ccda;
 }
-.vue-upload-img .list-img-container img {
+.vue-upload-imgs .list-img-container img {
     width: 100%;
     height: 100%;
 }
-.vue-upload-img .list-img-container,
-.vue-upload-img .list-span {
+.vue-upload-imgs .list-img-container,
+.vue-upload-imgs .list-span {
     display: inline-block;
     line-height: 50px;
     height: 50px;
     font-size: 14px;
     vertical-align: top;
 }
-.vue-upload-img .list-span {
+.vue-upload-imgs .list-span {
     width: 100px;
     text-align: center;
     overflow: hidden;

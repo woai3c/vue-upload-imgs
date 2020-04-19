@@ -1,25 +1,25 @@
 {
-  "name": "vue-upload-img",
-  "version": "1.0.0",
-  "description": "Vue动态生成表单",
-  "main": "dist/vue-upload-img.js",
+  "name": "vue-upload-imgss",
+  "version": "0.0.1",
+  "description": "Vue 图片上传组件(base64)",
+  "main": "dist/vue-upload-imgss.js",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/woai3c/vue-upload-img.git"
+    "url": "git+https://github.com/woai3c/vue-upload-imgss.git"
   },
   "keywords": [
-    "vue-upload-img",
+    "vue-upload-imgss",
     "vue"
   ],
   "author": "bin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/woai3c/vue-upload-img/issues"
+    "url": "https://github.com/woai3c/vue-upload-imgss/issues"
   },
-  "homepage": "https://github.com/woai3c/vue-upload-img#readme",
+  "homepage": "https://github.com/woai3c/vue-upload-imgss#readme",
   "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.26.3",
