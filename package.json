@@ -1,6 +1,6 @@
 {
   "name": "vue-upload-imgs",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "Vue 图片上传组件(base64)",
   "main": "dist/vue-upload-imgs.js",
   "scripts": {
