@@ -19,10 +19,10 @@
 |compress|属性值|是否开启压缩|false|Boolean|
 |quality|属性值|压缩质量|0.8|Number|
 |beforeUpload|属性值|上传前回调函数|null|Function|
-|change|事件|图片改变时触发|null|Function|
-|remove|事件|图片移除时触发|null|Function|
+|change|事件|图片改变时触发|null|Function，参数为改变后的图片数组|
+|remove|事件|图片移除时触发|null|Function，参数为要移除的图片索引值 index|
 |exceed|事件|图片超出限制个数时触发|null|Function|
-|preview|事件|点击图片上的 + 号触发预览事件|null|Function|
+|preview|事件|点击图片上的 + 号触发预览事件|null|Function，参数为要预览的图片索引值 index|
 
 ## 使用
 ### 在单文件组件中引用
