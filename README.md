@@ -18,7 +18,7 @@
 |multiple|属性值|是否允许多选|false|Boolean|
 |compress|属性值|是否开启压缩|false|Boolean|
 |quality|属性值|压缩质量|0.8|Number|
-|beforeUpload|函数|上传前回调函数|null|Function|
+|beforeUpload|属性值|上传前回调函数|null|Function|
 |change|事件|图片改变时触发|null|Function|
 |remove|事件|图片移除时触发|null|Function|
 |exceed|事件|图片超出限制个数时触发|null|Function|
