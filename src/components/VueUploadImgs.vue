@@ -132,8 +132,8 @@ export default {
                             img.onload = () => {
                                 const w = img.width
                                 const h = img.height
-                                canvas.setAttribute("width", w)
-                                canvas.setAttribute("height", h)
+                                canvas.setAttribute('width', w)
+                                canvas.setAttribute('height', h)
                                 ctx.drawImage(img, 0, 0, w, h)
                                 const base64 = canvas.toDataURL(file.type, this.quality)
                                 result.push({
@@ -155,7 +155,7 @@ export default {
         },
 
         verify(len) {
-            if (/^\d+$/.test(this.limit) && this.limit != 0) {
+            if (/^\d+$/.test(this.limit) && this.limit !== 0) {
                 if (this.limit < len) {
                     this.$emit('exceed')
                     return false
