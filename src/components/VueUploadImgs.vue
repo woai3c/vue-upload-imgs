@@ -37,6 +37,10 @@
 
 <script>
 export default {
+    model: {
+        prop: 'files',
+        event: 'change',
+    },
     props: {
         disabled: {
             type: Boolean,
@@ -48,11 +52,12 @@ export default {
         },
         access: {
             type: String,
-            default: 'image/png, image/jpeg',
+            default: 'image/*',
         },
         files: {
             type: Array,
             default: () => [], // 图片
+            required: true,
         },
         label: {
             type: String,
@@ -74,7 +79,15 @@ export default {
             type: Number,
             default: 0.8, // 默认压缩质量
         },
-        beforeUpload: { // 上传前回调函数
+        beforeRead: { // 读取前回调函数
+            type: Function,
+            default: null,
+        },
+        afterRead: { // 读取后回调函数
+            type: Function,
+            default: null,
+        },
+        beforeRemove: { // 移除前回调函数
             type: Function,
             default: null,
         },
@@ -87,28 +100,32 @@ export default {
     methods: {
         remove(index) {
             if (this.disabled) return
-            this.$emit('remove', index)
+            if (this.beforeRemove && !this.beforeRemove(index, this.files[index])) return
+            const files = this.files.slice()
+            files.splice(index, 1)
+            this.$emit('change', files)
         },
 
         preview(index) {
-            this.$emit('preview', index)
+            this.$emit('preview', index, this.files[index])
         },
 
         fileChangeHandler(e) {
-            const files = this.$refs.vueUploadImg.files
-            if (this.beforeUpload && !this.beforeUpload(files)) {
+            const newFiles = this.$refs.vueUploadImg.files
+            if (this.beforeRead && !this.beforeRead(newFiles)) {
                 e.target.value = ''
                 return
             }
 
             const oldLen = this.files.length
-            const result = [...this.files]
-            if (!this.verify(oldLen + files.length)) return 
-
+            const oldFiles = [...this.files]
+            const result = []
+            if (!this.verify(oldLen + newFiles.length)) return 
+            
             const canvas = document.createElement('canvas')
             const ctx = canvas.getContext('2d')
-            for (let i = 0, len = files.length; i < len; i++) {
-                const file = files[i]
+            for (let i = 0, len = newFiles.length; i < len; i++) {
+                const file = newFiles[i]
                 if (file.type.includes('image')) {
                     const reader = new FileReader()
                     reader.readAsDataURL(file)
@@ -122,8 +139,9 @@ export default {
                                 size: file.size,
                             })
 
-                            if (len + oldLen == result.length) {
-                                this.$emit('change', result)
+                            if (len == result.length) {
+                                this.$emit('change', oldFiles.concat(result))
+                                this.afterRead && this.afterRead(result)
                                 e.target.value = ''
                             }
                         } else {
@@ -143,8 +161,9 @@ export default {
                                     size: file.size,
                                 })
 
-                                if (len + oldLen == result.length) {
-                                    this.$emit('change', result)
+                                if (len == result.length) {
+                                    this.$emit('change', oldFiles.concat(result))
+                                    this.afterRead && this.afterRead(result)
                                     e.target.value = ''
                                 }
                             }
