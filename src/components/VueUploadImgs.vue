@@ -68,7 +68,7 @@ export default {
             default: 1, // 限制上传的图片数， 0 为不限制
         },
         maxSize: {
-            type: [Number, String],
+            type: Number,
             default: null, // 图片最大尺寸，超过将不添加并触发 oversize 事件
         },
         multiple: {
