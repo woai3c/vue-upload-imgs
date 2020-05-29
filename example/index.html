@@ -40,6 +40,7 @@
             :type="type"
             @preview="preview"
             @exceed="exceed"
+            @oversize="oversize"
             v-model="files"
         >
         <div>只能上传3张图片</div>
@@ -53,23 +54,33 @@
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="../dist/vue-upload-imgs.js"></script>
+<script src="../dist/vueUploadImgs.umd.min.js"></script>
 <script>
     const app = new Vue({
         el: '#app',
         data() {
             return {
-                files: [],
+                files: [
+                    {
+                        url: 'https://pic3.zhimg.com/v2-058f646c41b55206f8110489d82fa103_is.jpg',
+                        name: 'user.jpg'
+                    }
+                ],
+                maxSize: 1024 * 10, // 10 KB
                 previewIMG: null,
-                options: [1, 2, 3, 4],
                 limit: 3,
-                imgMaxSize: 2,
                 isPreview: false,
                 type: 2, // 0 预览模式 1 列表模式 2 预览模式 + 上传按钮
             }
         },
         methods: {
+            oversize(file) {
+                console.log('oversize')
+                console.log('filesize:' + file.size / 1024 + 'KB')
+            },
+
             afterRead(file) {
+                console.log('after-read')
                 console.log(file)
             },
 
@@ -88,14 +99,9 @@
             },
 
             beforeRead(files) {
+                console.log('before-read')
                 for (let i = 0, len = files.length; i < len; i++) {
                     const file = files[i]
-                    const size = file.size / 1024 / 1024
-                    if (size > this.imgMaxSize) {
-                        alert('不能上传超过1M的图片')
-                        return false
-                    }
-
                     if (file.type != 'image/jpeg' && file.type != 'image/png') {
                         alert('只能上传jpg和png格式的图片')
                         return false

@@ -1,10 +1,11 @@
 {
   "name": "vue-upload-imgs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Vue 图片上传组件(base64)",
-  "main": "dist/vue-upload-imgs.js",
+  "main": "dist/vueUploadImgs.umd.min.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js --mode production"
+    "build-lib": "vue-cli-service build --target lib --name vueUploadImgs ./src/index.js",
+    "test": "vue-cli-service test:unit"
   },
   "repository": {
     "type": "git",
@@ -20,19 +21,15 @@
     "url": "https://github.com/woai3c/vue-upload-imgs/issues"
   },
   "homepage": "https://github.com/woai3c/vue-upload-imgs#readme",
-  "dependencies": {},
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "vue": "^2.6.11"
+  },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "css-loader": "^3.5.2",
-    "style-loader": "^1.1.4",
-    "uglifyjs-webpack-plugin": "^1.3.0",
-    "url-loader": "^4.1.0",
-    "vue-loader": "^15.9.1",
-    "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2"
+    "@vue/cli-plugin-babel": "^4.4.0",
+    "@vue/cli-plugin-unit-jest": "^4.4.0",
+    "@vue/cli-service": "^4.4.0",
+    "@vue/test-utils": "^1.0.3",
+    "vue-template-compiler": "^2.6.11"
   }
 }
