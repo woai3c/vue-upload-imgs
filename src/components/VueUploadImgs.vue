@@ -1,31 +1,31 @@
 <template>
     <div class="vue-upload-imgs" :class="disabled? 'vue-upload-disabled' : ''">
         <template v-if="type == 1">
-            <label :for="id" class="label-upload">{{ label }}</label>
+            <label :for="id" class="upload-label-upload">{{ label }}</label>
             <slot></slot>
             <div class="upload-main-list">
-                <div class="div-upload-img-list" v-for="(item, index) in files" v-show="item" :key="index">
-                    <div class="list-img-container">
+                <div class="upload-div-img-list" v-for="(item, index) in files" v-show="item" :key="index">
+                    <div class="upload-list-img-container">
                         <img :src="item.url">
                     </div>
-                    <span class="list-span">{{ item.name }}</span>
+                    <span class="upload-list-span">{{ item.name }}</span>
                     <span class="iconfont icon-shanchu" @click="remove(index)"></span>
                 </div>
             </div>
         </template>
         
         <template v-else>
-            <label :for="id" class="label-upload" v-if="type == 2">{{ label }}</label>
+            <label :for="id" class="upload-label-upload" v-if="type == 2">{{ label }}</label>
             <slot></slot>
             <div class="upload-main">
-                <div class="div-upload-img" v-for="(item, index) in files" v-show="item" :key="index">
+                <div class="upload-div-img" v-for="(item, index) in files" v-show="item" :key="index">
                     <img :src="item.url">
                     <div class="upload-bg-img">
                         <span class="iconfont icon-icon-test" @click="preview(index)"></span>
                         <span class="iconfont icon-shanchu1" @click="remove(index)"></span>
                     </div>
                 </div>
-                <label class="div-add-img" :for="id" v-show="!(limit !== 0 && limit == files.length)">
+                <label class="upload-div-add-img" :for="id" v-show="!(limit !== 0 && limit == files.length)">
                     <span class="iconfont icon-icon-test"></span>
                 </label>
             </div>
@@ -67,6 +67,10 @@ export default {
             type: Number,
             default: 1, // 限制上传的图片数， 0 为不限制
         },
+        maxSize: {
+            type: [Number, String],
+            default: null, // 图片最大尺寸，超过将不添加并触发 oversize 事件
+        },
         multiple: {
             type: Boolean,
             default: false, // 是否多选
@@ -79,15 +83,15 @@ export default {
             type: Number,
             default: 0.8, // 默认压缩质量
         },
-        beforeRead: { // 读取前回调函数
+        beforeRead: { // 读取前钩子函数
             type: Function,
             default: null,
         },
-        afterRead: { // 读取后回调函数
+        afterRead: { // 读取后钩子函数
             type: Function,
             default: null,
         },
-        beforeRemove: { // 移除前回调函数
+        beforeRemove: { // 移除前钩子函数
             type: Function,
             default: null,
         },
@@ -117,13 +121,19 @@ export default {
                 return
             }
 
-            const oldLen = this.files.length
+            if (!this.verify(this.files.length + newFiles.length)) return 
+            this.readFiles(e, newFiles)
+        },
+
+        readFiles(e, newFiles) {
+            let canvas, ctx
+            if (this.compress) {
+                canvas = document.createElement('canvas')
+                ctx = canvas.getContext('2d')
+            }
+
             const oldFiles = [...this.files]
             const result = []
-            if (!this.verify(oldLen + newFiles.length)) return 
-            
-            const canvas = document.createElement('canvas')
-            const ctx = canvas.getContext('2d')
             for (let i = 0, len = newFiles.length; i < len; i++) {
                 const file = newFiles[i]
                 if (file.type.includes('image')) {
@@ -132,18 +142,7 @@ export default {
                     reader.onload = (res) => {
                         const fileResult = res.target.result 
                         if (!this.compress) {
-                            result.push({
-                                name: file.name,
-                                url: fileResult,
-                                type: file.type,
-                                size: file.size,
-                            })
-
-                            if (len == result.length) {
-                                this.$emit('change', oldFiles.concat(result))
-                                this.afterRead && this.afterRead(result)
-                                e.target.value = ''
-                            }
+                            this.fileLoaded(file, fileResult, result, len, oldFiles)
                         } else {
                             const img = new Image()
                             img.src = fileResult
@@ -154,23 +153,36 @@ export default {
                                 canvas.setAttribute('height', h)
                                 ctx.drawImage(img, 0, 0, w, h)
                                 const base64 = canvas.toDataURL(file.type, this.quality)
-                                result.push({
-                                    name: file.name,
-                                    url: base64,
-                                    type: file.type,
-                                    size: file.size,
-                                })
-
-                                if (len == result.length) {
-                                    this.$emit('change', oldFiles.concat(result))
-                                    this.afterRead && this.afterRead(result)
-                                    e.target.value = ''
-                                }
+                                this.fileLoaded(file, base64, result, len, oldFiles, e)
                             }
                         }
                     }
                 }
             }
+        },
+
+        fileLoaded(file, content, result, len, oldFiles, e) {
+            if (this.maxSize !== null && this.isOverSize(file)) {
+                this.$emit('oversize', file)
+                return
+            }
+
+            result.push({
+                name: file.name,
+                url: content,
+                type: file.type,
+                size: file.size,
+            })
+
+            if (len == result.length) {
+                this.$emit('change', oldFiles.concat(result))
+                this.afterRead && this.afterRead(result)
+                e.target.value = ''
+            }
+        },
+
+        isOverSize(file) {
+            return file.size > this.maxSize
         },
 
         verify(len) {
@@ -190,7 +202,7 @@ export default {
 <style>
 @import '../assets/iconfont/iconfont.css';
 
-.vue-upload-imgs .label-upload {
+.upload-label-upload {
     border-radius: 5px;
     font-size: 16px;
     padding: 6px 26px;
@@ -200,11 +212,11 @@ export default {
     cursor: pointer;
     display: inline-block;
 }
-.vue-upload-imgs .upload-main {
+.upload-main {
     font-size: 0;
 }
-.vue-upload-imgs .div-add-img,
-.vue-upload-imgs .div-upload-img {
+.upload-div-add-img,
+.upload-div-img {
     min-width: 148px;
     width: 148px;
     height: 148px;
@@ -218,12 +230,12 @@ export default {
     display: inline-block;
     font-size: 14px;
 }
-.vue-upload-imgs .div-add-img {
+.upload-div-add-img {
     background-color: #fbfdff;
     border-style: dashed;
     cursor: pointer;
 }
-.vue-upload-imgs .div-add-img .iconfont {
+.upload-div-add-img .iconfont {
     font-size: 28px;
     color: #8c939d;
     font-weight: normal;
@@ -232,11 +244,11 @@ export default {
     left: 50%;
     transform: translate(-50%,-50%);
 }
-.vue-upload-imgs .div-upload-img img {
+.upload-div-img img {
     width: 100%;
     height: 100%;
 }
-.vue-upload-imgs .div-upload-img .iconfont {
+.upload-div-img .iconfont {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -246,13 +258,13 @@ export default {
     cursor: pointer;
     font-size: 20px;
 }
-.vue-upload-imgs .div-upload-img .icon-icon-test {
+.upload-div-img .icon-icon-test {
     left: 40%;
 }
-.vue-upload-imgs .div-upload-img .icon-shanchu1 {
+.upload-div-img .icon-shanchu1 {
     left: 60%;
 }
-.vue-upload-imgs .upload-bg-img {
+.upload-bg-img {
     position: absolute;
     top: 0;
     left: 0;
@@ -261,13 +273,13 @@ export default {
     background: rgba(0,0,0,.5);
     display: none;
 }
-.vue-upload-imgs .div-upload-img:hover {
+.upload-div-img:hover {
     opacity: .8;
 }
-.vue-upload-imgs .div-upload-img:hover .upload-bg-img {
+.upload-div-img:hover .upload-bg-img {
     display: block;
 }
-.vue-upload-imgs .div-upload-img-list {
+.upload-div-img-list {
     margin-top: 10px;
     border: 1px solid #c0ccda;
     padding: 8px;
@@ -275,47 +287,47 @@ export default {
     width: 212px;
     border-radius: 5px;
 }
-.vue-upload-imgs .div-upload-img-list .icon-shanchu {
+.upload-div-img-list .icon-shanchu {
     margin-left: 10px;
     cursor: pointer;
     color: #8c939d;
 }
-.vue-upload-imgs .list-img-container {
+.upload-list-img-container {
     width: 50px;
     overflow: hidden;
     border-radius: 3px;
     border: 1px solid #c0ccda;
 }
-.vue-upload-imgs .list-img-container img {
+.upload-list-img-container img {
     width: 100%;
     height: 100%;
 }
-.vue-upload-imgs .list-img-container,
-.vue-upload-imgs .list-span {
+.upload-list-img-container,
+.upload-list-span {
     display: inline-block;
     line-height: 50px;
     height: 50px;
     font-size: 14px;
     vertical-align: top;
 }
-.vue-upload-imgs .list-span {
+.upload-list-span {
     width: 100px;
     text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.vue-upload-disabled .label-upload {
+.vue-upload-disabled .upload-label-upload {
     background-color: #F5F7FA;
     border-color: #E4E7ED;
     color: #C0C4CC;
     cursor: not-allowed;
 }
-.vue-upload-disabled .div-add-img {
+.vue-upload-disabled .upload-div-add-img {
     cursor: not-allowed;
 }
-.vue-upload-disabled .div-upload-img .icon-shanchu,
-.vue-upload-disabled .div-upload-img .icon-shanchu1 {
+.vue-upload-disabled .upload-div-img .icon-shanchu,
+.vue-upload-disabled .upload-div-img .icon-shanchu1 {
     cursor: not-allowed;
 }
 </style>
