@@ -21,9 +21,8 @@
 |quality|属性值|压缩质量|0.8|Number|
 |before-read|属性值|读取文件前的钩子函数|null|Function，返回值为 true 则继续读取图片，为 false 则不进行任何操作|
 |after-read|属性值|读取文件后的钩子函数|null|Function，参数为读取后的图片|
-|before-remove|属性值|读取文件后的钩子函数|null|Function，返回值为 true 则删除图片，为 false 则不进行任何操作|
+|before-remove|属性值|移除文件前的钩子函数|null|Function，返回值为 true 则删除图片，为 false 则不进行任何操作|
 |oversize|事件|图片大小超过 max-size 时触发|null|Function，参数为超过尺寸大小的图片|
-|remove|事件|图片移除时触发|null|Function，参数为要移除的图片索引值 index|
 |exceed|事件|图片超出限制个数时触发|null|Function|
 |preview|事件|点击图片上的 + 号触发预览事件|null|Function，参数为要预览的图片索引值 index 和图片 file|
 
