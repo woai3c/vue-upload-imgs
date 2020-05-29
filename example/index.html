@@ -33,14 +33,14 @@
         <vue-upload-imgs 
             multiple
             compress
-            :files="files"
-            :before-upload="beforeUpload"
+            :before-read="beforeRead"
+            :after-read="afterRead"
+            :before-remove="beforeRemove"
             :limit="limit"
             :type="type"
-            @change="change"
-            @remove="remove"
             @preview="preview"
             @exceed="exceed"
+            v-model="files"
         >
         <div>只能上传3张图片</div>
         </vue-upload-imgs>
@@ -55,7 +55,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="../dist/vue-upload-imgs.js"></script>
 <script>
-    new Vue({
+    const app = new Vue({
         el: '#app',
         data() {
             return {
@@ -69,17 +69,17 @@
             }
         },
         methods: {
-            change(res) {
-                this.files = res
-                console.log(res)
+            afterRead(file) {
+                console.log(file)
             },
 
-            remove(index) {
-                this.files.splice(index, 1)
+            beforeRemove(index, file) {
+                console.log(index, file)
+                return true
             },
 
-            preview(index) {
-                this.previewIMG = this.files[index].url
+            preview(index, file) {
+                this.previewIMG = file.url
                 this.isPreview = true
             },
 
@@ -87,7 +87,7 @@
                 alert(`只能上传${this.limit}张图片`)
             },
 
-            beforeUpload(files) {
+            beforeRead(files) {
                 for (let i = 0, len = files.length; i < len; i++) {
                     const file = files[i]
                     const size = file.size / 1024 / 1024
