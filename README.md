@@ -44,14 +44,15 @@ Vue.use(VueUploadImgs)
         <VueUploadImgs 
             multiple
             compress
-            :files="files"
-            :before-upload="beforeUpload"
+            :before-read="beforeRead"
+            :after-read="afterRead"
+            :before-remove="beforeRemove"
             :limit="limit"
             :type="type"
-            @change="change"
-            @remove="remove"
             @preview="preview"
             @exceed="exceed"
+            @oversize="oversize"
+            v-model="files"
         >
         </VueUploadImgs>
     </div>
@@ -70,14 +71,15 @@ Vue.use(VueUploadImgs)
     <vue-upload-imgs 
         multiple
         compress
-        :files="files"
-        :before-upload="beforeUpload"
+        :before-read="beforeRead"
+        :after-read="afterRead"
+        :before-remove="beforeRemove"
         :limit="limit"
         :type="type"
-        @change="change"
-        @remove="remove"
         @preview="preview"
         @exceed="exceed"
+        @oversize="oversize"
+        v-model="files"
     >
     </vue-upload-imgs>
 </div>
