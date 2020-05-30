@@ -1,10 +1,10 @@
 {
   "name": "vue-upload-imgs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Vue 图片上传组件(base64)",
   "main": "dist/vueUploadImgs.umd.min.js",
   "scripts": {
-    "build-lib": "vue-cli-service build --target lib --name vueUploadImgs ./src/index.js",
+    "build": "vue-cli-service build --target lib --name vueUploadImgs ./src/index.js",
     "test": "vue-cli-service test:unit"
   },
   "repository": {
