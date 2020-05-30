@@ -63,7 +63,7 @@ Vue.use(VueUploadImgs)
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="../dist/vue-upload-imgs.js"></script>
+<script src="../dist/vueUploadImgs.umd.min.js"></script>
 ```
 
 ```html
