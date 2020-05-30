@@ -48,7 +48,7 @@ export default {
         },
         type: {
             type: Number,
-            default: 0, // 0 只显示图片 1 图片按钮都显示 2 另一种显示模式
+            default: 0, // 0 预览模式 1 列表模式 2 预览模式 + 上传按钮
         },
         access: {
             type: String,
@@ -65,7 +65,7 @@ export default {
         },
         limit: {
             type: Number,
-            default: 1, // 限制上传的图片数， 0 为不限制
+            default: 0, // 限制上传的图片数， 0 为不限制
         },
         maxSize: {
             type: Number,
@@ -115,17 +115,17 @@ export default {
         },
 
         fileChangeHandler(e) {
-            const newFiles = this.$refs.vueUploadImg.files
+            const newFiles = e.target.files
             if (this.beforeRead && !this.beforeRead(newFiles)) {
-                e.target.value = ''
+                this.$refs.vueUploadImg.value = ''
                 return
             }
 
             if (!this.verify(this.files.length + newFiles.length)) return 
-            this.readFiles(e, newFiles)
+            this.readFiles(newFiles)
         },
 
-        readFiles(e, newFiles) {
+        readFiles(newFiles) {
             let canvas, ctx
             if (this.compress) {
                 canvas = document.createElement('canvas')
@@ -138,14 +138,12 @@ export default {
                 const file = newFiles[i]
                 if (file.type.includes('image')) {
                     const reader = new FileReader()
-                    reader.readAsDataURL(file)
                     reader.onload = (res) => {
                         const fileResult = res.target.result 
                         if (!this.compress) {
                             this.fileLoaded(file, fileResult, result, len, oldFiles)
                         } else {
                             const img = new Image()
-                            img.src = fileResult
                             img.onload = () => {
                                 const w = img.width
                                 const h = img.height
@@ -153,15 +151,19 @@ export default {
                                 canvas.setAttribute('height', h)
                                 ctx.drawImage(img, 0, 0, w, h)
                                 const base64 = canvas.toDataURL(file.type, this.quality)
-                                this.fileLoaded(file, base64, result, len, oldFiles, e)
+                                this.fileLoaded(file, base64, result, len, oldFiles)
                             }
+
+                            img.src = fileResult
                         }
                     }
+
+                    reader.readAsDataURL(file)
                 }
             }
         },
 
-        fileLoaded(file, content, result, len, oldFiles, e) {
+        fileLoaded(file, content, result, len, oldFiles) {
             if (this.maxSize !== null && this.isOverSize(file)) {
                 this.$emit('oversize', file)
                 return
@@ -177,7 +179,7 @@ export default {
             if (len == result.length) {
                 this.$emit('change', oldFiles.concat(result))
                 this.afterRead && this.afterRead(result)
-                e.target.value = ''
+                this.$refs.vueUploadImg.value = ''
             }
         },
 
@@ -326,8 +328,8 @@ export default {
 .vue-upload-disabled .upload-div-add-img {
     cursor: not-allowed;
 }
-.vue-upload-disabled .upload-div-img .icon-shanchu,
-.vue-upload-disabled .upload-div-img .icon-shanchu1 {
+.vue-upload-disabled .icon-shanchu,
+.vue-upload-disabled .icon-shanchu1 {
     cursor: not-allowed;
 }
 </style>
