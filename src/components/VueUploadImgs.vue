@@ -1,3 +1,4 @@
+<!-- eslint-disable max-len -->
 <template>
     <div class="vue-upload-imgs" :class="disabled? 'vue-upload-disabled' : ''">
         <template v-if="type == 1">
@@ -183,20 +184,20 @@ export default {
             }
         },
 
-    isOverSize(file) {
-        return file.size > this.maxSize
-    },
+        isOverSize(file) {
+            return file.size > this.maxSize
+        },
 
-    verify(len) {
-        if (/^\d+$/.test(this.limit) && this.limit !== 0) {
-            if (this.limit < len) {
-                this.$emit('exceed')
-                return false
+        verify(len) {
+            if (/^\d+$/.test(this.limit) && this.limit !== 0) {
+                if (this.limit < len) {
+                    this.$emit('exceed')
+                    return false
+                }
             }
-        }
 
             return true
-        }
+        },
     },
 }
 </script>

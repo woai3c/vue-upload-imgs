@@ -2,7 +2,7 @@ module.exports = {
     root: true,
     parserOptions: {
         ecmaVersion: 2020,
-        parser: '@babel/eslint-parser',
+        parser: 'babel-eslint',
     },
     env: {
         browser: true,
@@ -10,7 +10,10 @@ module.exports = {
         node: true,
         jest: true,
     },
-    extends: '@vue/airbnb',
+    extends: [
+        'plugin:vue/essential',
+        '@vue/airbnb',
+    ],
     rules: {
         'no-console': 'off',
         'array-element-newline': ['error', 'consistent'],

@@ -1,7 +1,7 @@
 import './assets/iconfont/iconfont.css'
 import VueUploadImgs from './components/VueUploadImgs.vue'
 
-const install = function (Vue, opts = {}) {
+const install = function (Vue) {
     Vue.component('VueUploadImgs', VueUploadImgs)
 }
 
