@@ -2,49 +2,35 @@
   "name": "vue-upload-imgs",
   "version": "1.0.3",
   "description": "Vue 图片上传组件(base64)",
+  "author": "tanguangzhi",
   "main": "dist/vue-upload-imgs.cjs.js",
   "module": "dist/vue-upload-imgs.esm.js",
   "scripts": {
     "build": "rollup -c rollup.config.js --environment INCLUDE_DEPS,BUILD:production",
-    "test": "npm run build && jest --coverage",
-    "release": "npm run test && node scripts/release.js",
+    "lint": "eslint --ext src/**/*.{js,vue}",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "lint": "eslint --ext src/**/*.{js,.vue}"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/woai3c/vue-upload-imgs.git"
-  },
-  "keywords": [
-    "vue-upload-imgs",
-    "vue"
-  ],
-  "author": "bin",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/woai3c/vue-upload-imgs/issues"
-  },
-  "homepage": "https://github.com/woai3c/vue-upload-imgs#readme",
-  "peerDependencies": {
-    "vue": "^2.0.0 || ^3.0.0"
+    "release": "npm run test && node scripts/release.js",
+    "test": "npm run build && jest --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
-    "@babel/eslint-parser": "^7.15.7",
     "@babel/plugin-transform-runtime": "^7.15.0",
-    "@babel/preset-env": "^7.14.5",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-eslint": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
     "@vue/eslint-config-airbnb": "^5.3.0",
     "@vue/test-utils": "^1.2.2",
+    "babel-eslint": "^10.1.0",
     "chalk": "^4.1.2",
     "conventional-changelog-cli": "^2.1.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-vue": "^7.18.0",
     "execa": "^4.1.0",
     "husky": "^4.2.3",
     "jest": "^27.0.6",
@@ -55,8 +41,24 @@
     "rollup": "^2.45.2",
     "rollup-plugin-postcss": "^4.0.1",
     "rollup-plugin-uglify": "^6.0.4",
-    "rollup-plugin-vue": "^5.0.0",
+    "rollup-plugin-vue": "^5.0.1",
     "semver": "^7.3.5",
-    "vue-eslint-parser": "^7.11.0"
+    "vue-template-compiler": "^2.6.14"
+  },
+  "peerDependencies": {
+    "vue": "^2.0.0 || ^3.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/woai3c/vue-upload-imgs/issues"
+  },
+  "homepage": "https://github.com/woai3c/vue-upload-imgs#readme",
+  "keywords": [
+    "vue-upload-imgs",
+    "vue"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woai3c/vue-upload-imgs.git"
   }
 }
