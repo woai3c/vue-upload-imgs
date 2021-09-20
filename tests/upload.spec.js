@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { mount } from '@vue/test-utils'
-import { VueUploadImgs } from '../../dist/vue-upload-imgs.esm'
+const { mount } = require('@vue/test-utils')
+const { VueUploadImgs } = require('../dist/vue-upload-imgs.cjs')
 
 const factory = (params) => mount(VueUploadImgs, { ...params })
 
