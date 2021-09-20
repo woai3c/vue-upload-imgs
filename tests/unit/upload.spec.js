@@ -1,9 +1,11 @@
-import { mount } from '@vue/test-utils'
-import VueUploadImgs from '@/components/VueUploadImgs.vue'
+/**
+ * @jest-environment jsdom
+ */
 
-const factory = (params) => {
-    return mount(VueUploadImgs, { ...params })
-}
+import { mount } from '@vue/test-utils'
+import { VueUploadImgs } from '../../dist/vue-upload-imgs.esm'
+
+const factory = (params) => mount(VueUploadImgs, { ...params })
 
 const fileData = 'data:image/test'
 
@@ -37,7 +39,7 @@ describe('VueUploadImgs', () => {
                 files: [],
                 beforeRead,
                 afterRead,
-            }
+            },
         })
 
         wrapper.vm.fileChangeHandler(event)
@@ -51,7 +53,7 @@ describe('VueUploadImgs', () => {
             propsData: {
                 files: [],
                 afterRead,
-            }
+            },
         })
 
         wrapper.vm.fileChangeHandler(event)
@@ -64,7 +66,7 @@ describe('VueUploadImgs', () => {
             propsData: {
                 files: [{ url: fileData }],
                 beforeRemove,
-            }
+            },
         })
 
         wrapper.find('.icon-shanchu1').trigger('click')
@@ -78,7 +80,7 @@ describe('VueUploadImgs', () => {
                 files: [{ url: fileData }],
                 disabled: true,
                 beforeRemove,
-            }
+            },
         })
 
         wrapper.find('.icon-shanchu1').trigger('click')
@@ -93,7 +95,7 @@ describe('VueUploadImgs', () => {
                     expect(files[0].url).toEqual(fileData)
                     done()
                 },
-            }
+            },
         })
 
         wrapper.vm.fileChangeHandler(event)
@@ -106,7 +108,7 @@ describe('VueUploadImgs', () => {
                 files: [],
                 maxSize: 100,
                 afterRead,
-            }
+            },
         })
 
         wrapper.vm.fileChangeHandler(event)
@@ -117,21 +119,21 @@ describe('VueUploadImgs', () => {
         const wrapper = factory({
             propsData: {
                 files: [],
-            }
+            },
         })
 
         const wrapper2 = factory({
             propsData: {
                 files: [],
                 type: 1,
-            }
+            },
         })
 
         const wrapper3 = factory({
             propsData: {
                 files: [],
                 type: 2,
-            }
+            },
         })
         
         expect(wrapper.text()).toBe('')
@@ -144,7 +146,7 @@ describe('VueUploadImgs', () => {
         const wrapper = factory({
             propsData: {
                 files: [],
-            }
+            },
         })
 
         const access = 'image/png'
@@ -152,7 +154,7 @@ describe('VueUploadImgs', () => {
             propsData: {
                 access,
                 files: [],
-            }
+            },
         })
 
         expect(wrapper.vm.access).toBe('image/*')
@@ -163,7 +165,7 @@ describe('VueUploadImgs', () => {
         const wrapper = factory({
             propsData: {
                 files: [],
-            }
+            },
         })
 
         const label = '测试上传'
@@ -171,7 +173,7 @@ describe('VueUploadImgs', () => {
             propsData: {
                 label,
                 files: [],
-            }
+            },
         })
 
         expect(wrapper.vm.label).toBe('点击上传')
@@ -184,7 +186,7 @@ describe('VueUploadImgs', () => {
             propsData: {
                 files: [],
                 afterRead,
-            }
+            },
         })
 
         const afterRead2 = jest.fn()
@@ -193,7 +195,7 @@ describe('VueUploadImgs', () => {
                 files: [],
                 limit: 1,
                 afterRead: afterRead2,
-            }
+            },
         })
 
         const event2 = { target: { files: [file, file] } }

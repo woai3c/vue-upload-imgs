@@ -183,17 +183,17 @@ export default {
             }
         },
 
-        isOverSize(file) {
-            return file.size > this.maxSize
-        },
+    isOverSize(file) {
+        return file.size > this.maxSize
+    },
 
-        verify(len) {
-            if (/^\d+$/.test(this.limit) && this.limit !== 0) {
-                if (this.limit < len) {
-                    this.$emit('exceed')
-                    return false
-                }
+    verify(len) {
+        if (/^\d+$/.test(this.limit) && this.limit !== 0) {
+            if (this.limit < len) {
+                this.$emit('exceed')
+                return false
             }
+        }
 
             return true
         }
@@ -201,135 +201,137 @@ export default {
 }
 </script>
 
-<style>
-@import '../assets/iconfont/iconfont.css';
-
-.upload-label-upload {
-    border-radius: 5px;
-    font-size: 16px;
-    padding: 6px 26px;
-    background: #3594f2;
-    color: #fff;
-    font-weight: normal;
-    cursor: pointer;
-    display: inline-block;
-}
-.upload-main {
-    font-size: 0;
-}
-.upload-div-add-img,
-.upload-div-img {
-    min-width: 148px;
-    width: 148px;
-    height: 148px;
-    border-radius: 6px;
-    border: 1px solid #c0ccda;
-    overflow: hidden;
-    position: relative;
-    margin-right: 6px;
-    margin-top: 5px;
-    transition: opacity .3s;
-    display: inline-block;
-    font-size: 14px;
-}
-.upload-div-add-img {
-    background-color: #fbfdff;
-    border-style: dashed;
-    cursor: pointer;
-}
-.upload-div-add-img .iconfont {
-    font-size: 28px;
-    color: #8c939d;
-    font-weight: normal;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-}
-.upload-div-img img {
-    width: 100%;
-    height: 100%;
-}
-.upload-div-img .iconfont {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    color: #fff;
-    z-index: 1;
-    cursor: pointer;
-    font-size: 20px;
-}
-.upload-div-img .icon-icon-test {
-    left: 40%;
-}
-.upload-div-img .icon-shanchu1 {
-    left: 60%;
-}
-.upload-bg-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,.5);
-    display: none;
-}
-.upload-div-img:hover {
-    opacity: .8;
-}
-.upload-div-img:hover .upload-bg-img {
-    display: block;
-}
-.upload-div-img-list {
-    margin-top: 10px;
-    border: 1px solid #c0ccda;
-    padding: 8px;
-    box-sizing: border-box;
-    width: 212px;
-    border-radius: 5px;
-}
-.upload-div-img-list .icon-shanchu {
-    margin-left: 10px;
-    cursor: pointer;
-    color: #8c939d;
-}
-.upload-list-img-container {
-    width: 50px;
-    overflow: hidden;
-    border-radius: 3px;
-    border: 1px solid #c0ccda;
-}
-.upload-list-img-container img {
-    width: 100%;
-    height: 100%;
-}
-.upload-list-img-container,
-.upload-list-span {
-    display: inline-block;
-    line-height: 50px;
-    height: 50px;
-    font-size: 14px;
-    vertical-align: top;
-}
-.upload-list-span {
-    width: 100px;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.vue-upload-disabled .upload-label-upload {
-    background-color: #F5F7FA;
-    border-color: #E4E7ED;
-    color: #C0C4CC;
-    cursor: not-allowed;
-}
-.vue-upload-disabled .upload-div-add-img {
-    cursor: not-allowed;
-}
-.vue-upload-disabled .icon-shanchu,
-.vue-upload-disabled .icon-shanchu1 {
-    cursor: not-allowed;
+<style lang="scss">
+.vue-upload-imgs {
+    .upload-label-upload {
+        border-radius: 5px;
+        font-size: 16px;
+        padding: 6px 26px;
+        background: #3594f2;
+        color: #fff;
+        font-weight: normal;
+        cursor: pointer;
+        display: inline-block;
+    }
+    .upload-main {
+        font-size: 0;
+    }
+    .upload-div-add-img,
+    .upload-div-img {
+        min-width: 148px;
+        width: 148px;
+        height: 148px;
+        border-radius: 6px;
+        border: 1px solid #c0ccda;
+        overflow: hidden;
+        position: relative;
+        margin-right: 6px;
+        margin-top: 5px;
+        transition: opacity .3s;
+        display: inline-block;
+        font-size: 14px;
+    }
+    .upload-div-add-img {
+        background-color: #fbfdff;
+        border-style: dashed;
+        cursor: pointer;
+    }
+    .upload-div-add-img .iconfont {
+        font-size: 28px;
+        color: #8c939d;
+        font-weight: normal;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        user-select: none;
+    }
+    .upload-div-img img {
+        width: 100%;
+        height: 100%;
+    }
+    .upload-div-img .iconfont {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        color: #fff;
+        z-index: 1;
+        cursor: pointer;
+        font-size: 20px;
+        user-select: none;
+    }
+    .upload-div-img .icon-icon-test {
+        left: 40%;
+    }
+    .upload-div-img .icon-shanchu1 {
+        left: 60%;
+    }
+    .upload-bg-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,.5);
+        display: none;
+    }
+    .upload-div-img:hover {
+        opacity: .8;
+    }
+    .upload-div-img:hover .upload-bg-img {
+        display: block;
+    }
+    .upload-div-img-list {
+        margin-top: 10px;
+        border: 1px solid #c0ccda;
+        padding: 8px;
+        box-sizing: border-box;
+        width: 212px;
+        border-radius: 5px;
+    }
+    .upload-div-img-list .icon-shanchu {
+        margin-left: 10px;
+        cursor: pointer;
+        color: #8c939d;
+    }
+    .upload-list-img-container {
+        width: 50px;
+        overflow: hidden;
+        border-radius: 3px;
+        border: 1px solid #c0ccda;
+    }
+    .upload-list-img-container img {
+        width: 100%;
+        height: 100%;
+    }
+    .upload-list-img-container,
+    .upload-list-span {
+        display: inline-block;
+        line-height: 50px;
+        height: 50px;
+        font-size: 14px;
+        vertical-align: top;
+    }
+    .upload-list-span {
+        width: 100px;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .vue-upload-disabled .upload-label-upload {
+        background-color: #F5F7FA;
+        border-color: #E4E7ED;
+        color: #C0C4CC;
+        cursor: not-allowed;
+    }
+    .vue-upload-disabled .upload-div-add-img {
+        cursor: not-allowed;
+    }
+    .vue-upload-disabled .icon-shanchu,
+    .vue-upload-disabled .icon-shanchu1 {
+        cursor: not-allowed;
+    }
 }
 </style>
