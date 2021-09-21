@@ -15,8 +15,8 @@ const pkgDir = process.cwd()
 const pkgPath = path.resolve(pkgDir, 'package.json')
     
 /**
-       * @type {{ name: string, version: string }}
-       */
+ * @type {{ name: string, version: string }}
+ */
 const pkg = require(pkgPath)
 const currentVersion = pkg.version
 const pkgName = pkg.name
@@ -30,15 +30,15 @@ const versionIncrements = [
 const inc = (i) => semver.inc(currentVersion, i, 'beta')
       
 /**
-       * @param {string} bin
-       * @param {string[]} args
-       * @param {object} opts
-       */
+ * @param {string} bin
+ * @param {string[]} args
+ * @param {object} opts
+ */
 const run = (bin, args, opts = {}) => execa(bin, args, { stdio: 'inherit', ...opts })
       
 /**
-       * @param {string} msg
-       */
+ * @param {string} msg
+ */
 const step = (msg) => console.log(chalk.cyan(msg))
       
 async function main() {
@@ -47,8 +47,8 @@ async function main() {
     if (!targetVersion) {
         // no explicit version, offer suggestions
         /**
-           * @type {{ release: string }}
-           */
+         * @type {{ release: string }}
+         */
         const { release } = await prompts({
             type: 'select',
             name: 'release',
@@ -82,8 +82,8 @@ async function main() {
     const tag = `v${targetVersion}`
       
     /**
-         * @type {{ yes: boolean }}
-         */
+     * @type {{ yes: boolean }}
+     */
     const { yes } = await prompts({
         type: 'confirm',
         name: 'yes',
@@ -121,8 +121,8 @@ async function main() {
 }
       
 /**
-       * @param {string} version
-       */
+ * @param {string} version
+ */
 function updateVersion(version) {
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
     pkg.version = version
@@ -130,8 +130,8 @@ function updateVersion(version) {
 }
     
 /**
-     * @param {string} version
-     */
+ * @param {string} version
+ */
 async function publishPackage(version) {
     const publicArgs = [
         'publish',
