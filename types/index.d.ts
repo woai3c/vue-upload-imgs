@@ -1,3 +1,5 @@
+import { PluginFunction } from 'vue'
+
 export interface UploadOptions {
     disabled?: boolean
     type?: number
@@ -13,3 +15,10 @@ export interface UploadOptions {
     afterRead?: Function
     beforeRemove?: Function
 }
+
+module VueUploadImgs {
+  export const install: PluginFunction<{}>
+  export const version: string
+}
+
+export default VueUploadImgs
