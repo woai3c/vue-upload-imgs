@@ -5,6 +5,9 @@
   "author": "tanguangzhi",
   "main": "dist/vueUploadImgs.cjs.js",
   "module": "dist/vueUploadImgs.esm.js",
+  "unpkg": "dist/vueUploadImgs.iife.js",
+  "jsdelivr": "dist/vueUploadImgs.iife.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c rollup.config.js --environment INCLUDE_DEPS,BUILD:production",
     "lint": "eslint --ext src/**/*.{js,vue}",
