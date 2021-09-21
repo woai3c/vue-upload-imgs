@@ -7,7 +7,7 @@ const install = function (Vue) {
 
 const API = {
     install,
-    version: '1.1.0',
+    version: '1.1.2',
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
