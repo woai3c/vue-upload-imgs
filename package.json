@@ -3,8 +3,8 @@
   "version": "1.1.0",
   "description": "Vue 图片上传组件(base64)",
   "author": "tanguangzhi",
-  "main": "dist/vue-upload-imgs.cjs.js",
-  "module": "dist/vue-upload-imgs.esm.js",
+  "main": "dist/vueUploadImgs.cjs.js",
+  "module": "dist/vueUploadImgs.esm.js",
   "scripts": {
     "build": "rollup -c rollup.config.js --environment INCLUDE_DEPS,BUILD:production",
     "lint": "eslint --ext src/**/*.{js,vue}",

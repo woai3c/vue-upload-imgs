@@ -11,6 +11,8 @@ const resolveFile = function (filePath) {
     return path.join(__dirname, filePath)
 }
 
+const pluginName = 'vueUploadImgs'
+
 const plugins = [
     resolve(),
     commonjs(),
@@ -54,25 +56,25 @@ module.exports = [
     {
         ...config,
         output: {
-            file: resolveFile('dist/vue-upload-imgs.cjs.js'),
+            file: resolveFile(`dist/${pluginName}.cjs.js`),
             format: 'cjs',
-            name: 'vue-upload-imgs',
+            name: pluginName,
         },
     },
     {
         ...config,
         output: {
-            file: resolveFile('dist/vue-upload-imgs.esm.js'),
+            file: resolveFile(`dist/${pluginName}.esm.js`),
             format: 'esm',
-            name: 'vue-upload-imgs',
+            name: pluginName,
         },
     },
     {
         ...config,
         output: {
-            file: resolveFile('dist/vue-upload-imgs.iife.js'),
+            file: resolveFile(`dist/${pluginName}.iife.js`),
             format: 'iife',
-            name: 'vue-upload-imgs',
+            name: pluginName,
             extend: true,
         },
     },
