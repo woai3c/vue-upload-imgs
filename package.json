@@ -8,6 +8,15 @@
   "unpkg": "dist/vueUploadImgs.iife.js",
   "jsdelivr": "dist/vueUploadImgs.iife.js",
   "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "types",
+    "src",
+    "LICENSE",
+    "CHANGELOG",
+    "package.json",
+    "README.md"
+  ],
   "scripts": {
     "build": "rollup -c rollup.config.js --environment INCLUDE_DEPS,BUILD:production",
     "lint": "eslint --ext src/**/*.{js,vue}",
