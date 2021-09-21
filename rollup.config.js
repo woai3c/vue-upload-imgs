@@ -13,69 +13,75 @@ const resolveFile = function (filePath) {
 
 const pluginName = 'vueUploadImgs'
 
-const plugins = [
-    resolve(),
-    commonjs(),
-    vue(),
-    json({
-        compact: true,
-    }),
-    babel({
-        extensions: ['.js', '.vue'],
-        babelHelpers: 'runtime',
-        plugins: ['@babel/plugin-transform-runtime'],
-        presets: [
-            [
-                '@vue/cli-plugin-babel/preset',
-                {
-                    useBuiltIns: false,
-                    targets: {
-                        browsers: [
-                            '> 1%',
-                            'last 2 versions',
-                            'not ie <= 8',
-                        ],
+function getPlugin(isCompress = false) {
+    const result = [
+        resolve(),
+        commonjs(),
+        vue(),
+        json({
+            compact: true,
+        }),
+        babel({
+            extensions: ['.js', '.vue'],
+            babelHelpers: 'runtime',
+            plugins: ['@babel/plugin-transform-runtime'],
+            presets: [
+                [
+                    '@vue/cli-plugin-babel/preset',
+                    {
+                        useBuiltIns: false,
+                        targets: {
+                            browsers: [
+                                '> 1%',
+                                'last 2 versions',
+                                'not ie <= 8',
+                            ],
+                        },
                     },
-                },
+                ],
             ],
-        ],
-    }),
-    postcss({
-        extensions: ['.css'],
-        minimize: true,
-    }),
-    // uglify(),
-]
+        }),
+        postcss({
+            extensions: ['.css'],
+            minimize: true,
+        }),
+    ]
 
-const config = {
-    plugins,
-    input: resolveFile('src/index.js'),
+    if (isCompress) {
+        result.push(uglify())
+    }
+
+    return result
 }
 
-module.exports = [
-    {
-        ...config,
+function getBaseConfig(mode, isCompress = false) {
+    const result = {
+        input: resolveFile('src/index.js'),
         output: {
-            file: resolveFile(`dist/${pluginName}.cjs.js`),
-            format: 'cjs',
+            file: resolveFile(`dist/${pluginName}.${mode}.js`),
+            format: mode,
             name: pluginName,
         },
-    },
-    {
-        ...config,
-        output: {
-            file: resolveFile(`dist/${pluginName}.esm.js`),
-            format: 'esm',
-            name: pluginName,
-        },
-    },
-    {
-        ...config,
-        output: {
-            file: resolveFile(`dist/${pluginName}.iife.js`),
-            format: 'iife',
-            name: pluginName,
-            extend: true,
-        },
-    },
-]
+        plugins: getPlugin(isCompress),
+    }
+
+    if (mode === 'iife') {
+        result.extend = true
+    }
+
+    if (isCompress) {
+        result.output.file = resolveFile(`dist/${pluginName}.${mode}.min.js`)
+    }
+
+    return result
+}
+
+function getFinalConfig() {
+    const arr = ['esm', 'cjs', 'iife']
+    return [
+        ...arr.map(mode => getBaseConfig(mode)),
+        ...arr.map(mode => getBaseConfig(mode, true)),
+    ]
+}
+
+module.exports = getFinalConfig()
