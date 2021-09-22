@@ -66,7 +66,7 @@ function getBaseConfig(mode, isCompress = false) {
     }
 
     if (mode === 'iife') {
-        result.extend = true
+        result.output.extend = true
     }
 
     if (isCompress) {
