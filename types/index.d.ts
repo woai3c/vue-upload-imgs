@@ -16,7 +16,7 @@ export interface UploadOptions {
     beforeRemove?: Function
 }
 
-module VueUploadImgs {
+declare module VueUploadImgs {
   export const install: PluginFunction<{}>
   export const version: string
 }
