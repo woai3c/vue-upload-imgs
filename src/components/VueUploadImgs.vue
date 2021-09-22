@@ -5,7 +5,7 @@
             <label :for="id" class="upload-label-upload">{{ label }}</label>
             <slot></slot>
             <div class="upload-main-list">
-                <div class="upload-div-img-list" v-for="(item, index) in files" v-show="item" :key="index">
+                <div class="upload-div-img-list" v-for="(item, index) in modelValue" v-show="item" :key="index">
                     <div class="upload-list-img-container">
                         <img :src="item.url">
                     </div>
@@ -19,14 +19,14 @@
             <label :for="id" class="upload-label-upload" v-if="type == 2">{{ label }}</label>
             <slot></slot>
             <div class="upload-main">
-                <div class="upload-div-img" v-for="(item, index) in files" v-show="item" :key="index">
+                <div class="upload-div-img" v-for="(item, index) in modelValue" v-show="item" :key="index">
                     <img :src="item.url">
                     <div class="upload-bg-img">
                         <span class="iconfont icon-icon-test" @click="preview(index)"></span>
                         <span class="iconfont icon-shanchu1" @click="remove(index)"></span>
                     </div>
                 </div>
-                <label class="upload-div-add-img" :for="id" v-show="!(limit !== 0 && limit == files.length)">
+                <label class="upload-div-add-img" :for="id" v-show="!(limit !== 0 && limit == modelValue.length)">
                     <span class="iconfont icon-icon-test"></span>
                 </label>
             </div>
@@ -37,12 +37,15 @@
 </template>
 
 <script>
-export default {
-    model: {
-        prop: 'files',
-        event: 'change',
-    },
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+    emits: ['update:modelValue', 'preview', 'exceed', 'oversize'],
     props: {
+        modelValue: {
+            type: Array,
+            default: () => [],
+        },
         disabled: {
             type: Boolean,
             default: false,
@@ -54,11 +57,6 @@ export default {
         access: {
             type: String,
             default: 'image/*',
-        },
-        files: {
-            type: Array,
-            default: () => [], // 图片
-            required: true,
         },
         label: {
             type: String,
@@ -105,14 +103,14 @@ export default {
     methods: {
         remove(index) {
             if (this.disabled) return
-            if (this.beforeRemove && !this.beforeRemove(index, this.files[index])) return
-            const files = this.files.slice()
+            if (this.beforeRemove && !this.beforeRemove(index, this.modelValue[index])) return
+            const files = this.modelValue.slice()
             files.splice(index, 1)
-            this.$emit('change', files)
+            this.$emit('update:modelValue', files)
         },
 
         preview(index) {
-            this.$emit('preview', index, this.files[index])
+            this.$emit('preview', index, this.modelValue[index])
         },
 
         fileChangeHandler(e) {
@@ -122,7 +120,7 @@ export default {
                 return
             }
 
-            if (!this.verify(this.files.length + newFiles.length)) return 
+            if (!this.verify(this.modelValue.length + newFiles.length)) return 
             this.readFiles(newFiles)
         },
 
@@ -133,7 +131,7 @@ export default {
                 ctx = canvas.getContext('2d')
             }
 
-            const oldFiles = [...this.files]
+            const oldFiles = [...this.modelValue]
             const result = []
             for (let i = 0, len = newFiles.length; i < len; i++) {
                 const file = newFiles[i]
@@ -178,7 +176,7 @@ export default {
             })
 
             if (len == result.length) {
-                this.$emit('change', oldFiles.concat(result))
+                this.$emit('update:modelValue', oldFiles.concat(result))
                 this.afterRead && this.afterRead(result)
                 this.$refs.vueUploadImg.value = ''
             }
@@ -199,7 +197,7 @@ export default {
             return true
         },
     },
-}
+})
 </script>
 
 <style lang="scss">

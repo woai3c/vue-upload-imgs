@@ -43,7 +43,7 @@
             @oversize="oversize"
             v-model="files"
         >
-        <div>只能上传3张图片</div>
+            <div>只能上传3张图片</div>
         </vue-upload-imgs>
         <div class="preview-bg" v-show="isPreview">
             <div class="dialog">
@@ -53,11 +53,13 @@
         </div>
     </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="../dist/vue-upload-imgs.iife.js"></script>
+<script src="https://unpkg.com/vue@next"></script>
+<script src="../dist/VueUploadImgs.iife.js"></script>
 <script>
-    const app = new Vue({
-        el: '#app',
+    const app = Vue.createApp({
+        components: {
+            VueUploadImgs: VueUploadImgs.default,
+        },
         data() {
             return {
                 files: [
@@ -116,5 +118,7 @@
             }
         }
     })
+
+    app.mount('#app')
 </script>
 </html>

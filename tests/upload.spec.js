@@ -3,7 +3,7 @@
  */
 
 const { mount } = require('@vue/test-utils')
-const { VueUploadImgs } = require('../dist/vueUploadImgs.cjs')
+const { VueUploadImgs } = require('../dist/vue3/VueUploadImgs.cjs')
 
 const factory = (params) => mount(VueUploadImgs, { ...params })
 
@@ -36,7 +36,7 @@ describe('VueUploadImgs', () => {
         const afterRead = jest.fn()
         const wrapper = factory({
             propsData: {
-                files: [],
+                modelValue: [],
                 beforeRead,
                 afterRead,
             },
@@ -51,7 +51,7 @@ describe('VueUploadImgs', () => {
         const afterRead = jest.fn()
         const wrapper = factory({
             propsData: {
-                files: [],
+                modelValue: [],
                 afterRead,
             },
         })
@@ -64,7 +64,7 @@ describe('VueUploadImgs', () => {
         const beforeRemove = jest.fn()
         const wrapper = factory({
             propsData: {
-                files: [{ url: fileData }],
+                modelValue: [{ url: fileData }],
                 beforeRemove,
             },
         })
@@ -77,7 +77,7 @@ describe('VueUploadImgs', () => {
         const beforeRemove = jest.fn()
         const wrapper = factory({
             propsData: {
-                files: [{ url: fileData }],
+                modelValue: [{ url: fileData }],
                 disabled: true,
                 beforeRemove,
             },
@@ -90,7 +90,7 @@ describe('VueUploadImgs', () => {
     it('file content', (done) => {
         const wrapper = factory({
             propsData: {
-                files: [],
+                modelValue: [],
                 afterRead: (files) => {
                     expect(files[0].url).toEqual(fileData)
                     done()
@@ -105,7 +105,7 @@ describe('VueUploadImgs', () => {
         const afterRead = jest.fn()
         const wrapper = factory({
             propsData: {
-                files: [],
+                modelValue: [],
                 maxSize: 100,
                 afterRead,
             },
@@ -118,26 +118,26 @@ describe('VueUploadImgs', () => {
     it('type', () => {
         const wrapper = factory({
             propsData: {
-                files: [],
+                modelValue: [],
             },
         })
 
         const wrapper2 = factory({
             propsData: {
-                files: [],
+                modelValue: [],
                 type: 1,
             },
         })
 
         const wrapper3 = factory({
             propsData: {
-                files: [],
+                modelValue: [],
                 type: 2,
             },
         })
         
         expect(wrapper.text()).toBe('')
-        expect(wrapper.find('.upload-main-list').element).toBeUndefined()
+        expect(wrapper.find('.upload-main-list').exists()).toBe(false)
         expect(wrapper2.find('.upload-main-list').element.tagName).toBe('DIV')
         expect(wrapper3.text()).toBe('点击上传')
     })
@@ -145,7 +145,7 @@ describe('VueUploadImgs', () => {
     it('access', () => {
         const wrapper = factory({
             propsData: {
-                files: [],
+                modelValue: [],
             },
         })
 
@@ -153,7 +153,7 @@ describe('VueUploadImgs', () => {
         const wrapper2 = factory({
             propsData: {
                 access,
-                files: [],
+                modelValue: [],
             },
         })
 
@@ -164,7 +164,7 @@ describe('VueUploadImgs', () => {
     it('label', () => {
         const wrapper = factory({
             propsData: {
-                files: [],
+                modelValue: [],
             },
         })
 
@@ -172,7 +172,7 @@ describe('VueUploadImgs', () => {
         const wrapper2 = factory({
             propsData: {
                 label,
-                files: [],
+                modelValue: [],
             },
         })
 
@@ -184,7 +184,7 @@ describe('VueUploadImgs', () => {
         const afterRead = jest.fn()
         const wrapper = factory({
             propsData: {
-                files: [],
+                modelValue: [],
                 afterRead,
             },
         })
@@ -192,7 +192,7 @@ describe('VueUploadImgs', () => {
         const afterRead2 = jest.fn()
         const wrapper2 = factory({
             propsData: {
-                files: [],
+                modelValue: [],
                 limit: 1,
                 afterRead: afterRead2,
             },
