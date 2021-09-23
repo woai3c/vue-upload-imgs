@@ -11,7 +11,7 @@ const resolveFile = function (filePath) {
     return path.join(__dirname, filePath)
 }
 
-const pluginName = 'vueUploadImgs'
+const pluginName = 'VueUploadImgs'
 
 function getPlugin(isCompress = false) {
     const result = [

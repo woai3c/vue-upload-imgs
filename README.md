@@ -64,9 +64,9 @@ Vue.use(VueUploadImgs)
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- 开发环境 -->
-<script src="https://cdn.jsdelivr.net/npm/vue-upload-imgs/dist/vueUploadImgs.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-upload-imgs/dist/VueUploadImgs.iife.js"></script>
 <!-- 生产环境 -->
-<script src="https://cdn.jsdelivr.net/npm/vue-upload-imgs/dist/vueUploadImgs.iife.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-upload-imgs/dist/VueUploadImgs.iife.min.js"></script>
 ```
 
 ```html

@@ -3,7 +3,7 @@
  */
 
 const { mount } = require('@vue/test-utils')
-const { VueUploadImgs } = require('../dist/vueUploadImgs.cjs')
+const { VueUploadImgs } = require('../dist/VueUploadImgs.cjs')
 
 const factory = (params) => mount(VueUploadImgs, { ...params })
 
