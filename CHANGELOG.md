@@ -1,3 +1,12 @@
+# 2.0.0 (2021-09-23)
+
+
+### Bug Fixes
+
+### Features
+
+* 组件库升级，适配 vue3 ([55d1ef0](https://github.com/woai3c/vue-upload-imgs/commit/55d1ef00e1749028979cd1f414fc87616a25055f))
+
 ## 1.1.2 (2021-09-21)
 ## 1.1.1 (2021-09-21)
 ### Features
