@@ -1,4 +1,4 @@
-# vue 图片上传组件（支持 Vue2、Vue3）
+# Vue 图片上传组件（支持 Vue2、Vue3）
 组件保存的是图片的 base64 码，如果有 BUG，请提 [issues](https://github.com/woai3c/vue-upload-imgs/issues)
 
 ## 在线 demo
