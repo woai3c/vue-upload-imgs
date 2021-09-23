@@ -1,6 +1,6 @@
 {
   "name": "vue-upload-imgs",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Vue 图片上传组件(base64)",
   "author": "tanguangzhi",
   "main": "dist/VueUploadImgs.cjs.js",
