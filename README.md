@@ -27,7 +27,8 @@
 |preview|事件|点击图片上的 + 号触发预览事件|null|Function，参数为要预览的图片索引值 index 和图片 file|
 
 ## 使用
-### 在单文件组件中引用
+### Vue2
+#### 在单文件组件中引用
 ```
 npm i vue-upload-imgs
 ```
@@ -59,7 +60,7 @@ Vue.use(VueUploadImgs)
 </template>
 ```
 
-### 在HTML文件中直接引用
+#### 在HTML文件中直接引用
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -86,4 +87,79 @@ Vue.use(VueUploadImgs)
     >
     </vue-upload-imgs>
 </div>
+```
+### Vue3
+#### 在单文件组件中引用
+```
+npm i vue-upload-imgs
+```
+
+```js
+import { createApp } from 'vue'
+import VueUploadImgs from 'vue-upload-imgs/dist/vue3/VueUploadImgs.esm'
+import App from './App.vue'
+
+createApp(App)
+    .component('VueUploadImgs', VueUploadImgs)
+    .mount('#app')
+```
+```html
+<template>
+    <div>
+        <VueUploadImgs 
+            multiple
+            compress
+            :before-read="beforeRead"   
+            :after-read="afterRead"
+            :before-remove="beforeRemove"
+            :limit="limit"
+            :type="type"
+            @preview="preview"
+            @exceed="exceed"
+            @oversize="oversize"
+            v-model="files"
+        >
+        </VueUploadImgs>
+    </div>
+</template>
+```
+
+#### 在HTML文件中直接引用
+
+```html
+<script src="https://unpkg.com/vue@next"></script>
+<!-- 开发环境 -->
+<script src="https://cdn.jsdelivr.net/npm/vue-upload-imgs/dist/vue3/VueUploadImgs.iife.js"></script>
+<!-- 生产环境 -->
+<script src="https://cdn.jsdelivr.net/npm/vue-upload-imgs/dist/vue3/VueUploadImgs.iife.min.js"></script>
+```
+
+```html
+<div id="app">
+    <vue-upload-imgs 
+        multiple
+        compress
+        :before-read="beforeRead"
+        :after-read="afterRead"
+        :before-remove="beforeRemove"
+        :limit="limit"
+        :type="type"
+        @preview="preview"
+        @exceed="exceed"
+        @oversize="oversize"
+        v-model="files"
+    >
+    </vue-upload-imgs>
+</div>
+
+<script>
+const app = Vue.createApp({
+    components: {
+        VueUploadImgs: VueUploadImgs.default,
+    },
+    // ...
+})
+
+app.mount('#app')
+</script>
 ```
