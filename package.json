@@ -18,7 +18,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rollup -c rollup.config.js --environment INCLUDE_DEPS,BUILD:production",
+    "build": "rollup -c rollup.config.js --environment INCLUDE_DEPS,BUILD:production && node scripts/create-dts.js",
     "lint": "eslint --ext src/**/*.{js,vue}",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "release": "npm run test && node scripts/release.js",
