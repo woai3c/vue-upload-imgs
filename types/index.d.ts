@@ -4,7 +4,7 @@ export interface UploadOptions {
     disabled?: boolean
     type?: number
     access?: string
-    files: Array<any>
+    files?: Array<any>
     label?: string
     limit?: number
     maxSize?: number
@@ -18,7 +18,6 @@ export interface UploadOptions {
 
 declare module VueUploadImgs {
   export const install: PluginFunction<{}>
-  export const version: string
 }
 
 export default VueUploadImgs
