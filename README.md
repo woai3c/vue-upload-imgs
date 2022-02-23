@@ -63,11 +63,8 @@ Vue.use(VueUploadImgs)
 #### 在HTML文件中直接引用
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<!-- 开发环境 -->
-<script src="https://cdn.jsdelivr.net/npm/vue-upload-imgs/dist/VueUploadImgs.iife.js"></script>
-<!-- 生产环境 -->
-<script src="https://cdn.jsdelivr.net/npm/vue-upload-imgs/dist/VueUploadImgs.iife.min.js"></script>
+<script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-upload-imgs/dist/VueUploadImgs.iife.min.js"></script>
 ```
 
 ```html
@@ -128,10 +125,7 @@ createApp(App)
 
 ```html
 <script src="https://unpkg.com/vue@next"></script>
-<!-- 开发环境 -->
-<script src="https://cdn.jsdelivr.net/npm/vue-upload-imgs/dist/vue3/VueUploadImgs.iife.js"></script>
-<!-- 生产环境 -->
-<script src="https://cdn.jsdelivr.net/npm/vue-upload-imgs/dist/vue3/VueUploadImgs.iife.min.js"></script>
+<script src="https://unpkg.com/vue-upload-imgs/dist/vue3/VueUploadImgs.iife.min.js"></script>
 ```
 
 ```html
