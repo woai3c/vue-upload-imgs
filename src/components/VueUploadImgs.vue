@@ -250,6 +250,7 @@ export default {
     .upload-div-img img {
         width: 100%;
         height: 100%;
+        object-fit: cover;
     }
     .upload-div-img .iconfont {
         position: absolute;
@@ -305,6 +306,7 @@ export default {
     .upload-list-img-container img {
         width: 100%;
         height: 100%;
+        object-fit: cover;
     }
     .upload-list-img-container,
     .upload-list-span {
